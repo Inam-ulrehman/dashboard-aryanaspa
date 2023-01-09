@@ -66,7 +66,7 @@ const Products = () => {
                 <td>{item.title}</td>
                 <td>{item.category}</td>
                 <td>{item.inStock ? 'In-Stock' : 'out-of-Stock'}</td>
-                <td>{item.feature ? 'Feature Product' : ''}</td>
+                <td>{item.feature ? 'Feature' : ''}</td>
                 <td className='buttons'>
                   <Link className='btn' to={item._id}>
                     Edit
