@@ -37,6 +37,10 @@ const UploadImage = () => {
   }
   return (
     <Wrapper>
+      <div className='box'>
+        <strong>Step-2. </strong>
+        <p>Upload Image for About Us Card.</p>
+      </div>
       <div className='file-upload-container'>
         <input
           type='file'
@@ -74,6 +78,13 @@ const UploadImage = () => {
 const Wrapper = styled.div`
   display: grid;
   margin-left: 1rem;
+  .box {
+    display: flex;
+    p {
+      margin: 0;
+      margin-left: 1rem;
+    }
+  }
   .image-container {
     display: flex;
     flex-wrap: wrap;

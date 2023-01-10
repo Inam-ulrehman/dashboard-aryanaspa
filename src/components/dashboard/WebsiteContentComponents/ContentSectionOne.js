@@ -106,62 +106,116 @@ const ContentSectionOne = () => {
   }
   return (
     <Wrapper>
-      <h3>Section-1</h3>
-      <UploadImage
-        path={`/sectionOne/${state._id}`}
-        cbFunction={cbFunction}
-        state={state}
-        setState={setState}
-      />
-      <form className='form' onSubmit={handleSubmit}>
-        {/* heading  */}
-        <div>
-          <FormInput
-            label={'Heading'}
-            name={'heading'}
-            value={state.heading}
-            onChange={handleChange}
-          />
-        </div>
-        {/* paragraph */}
-        <div>
-          <FormInput
-            label={'Paragraph'}
-            name={'paragraph'}
-            value={state.paragraph}
-            onChange={handleChange}
-          />
-        </div>
-        {/* Button Title  */}
-        <div>
-          <FormInput
-            label={'Button Title'}
-            name={'buttonTitle'}
-            value={state.buttonTitle}
-            onChange={handleChange}
-          />
-        </div>
-        {/* desktop Image */}
-        <div>
-          <FormInput
-            label={'Desktop Image Link'}
-            name={'desktopImage'}
-            value={state.uploadImage[0]?.secure_url}
-            onChange={handleChange}
-            disabled
-          />
-        </div>
-
-        <button type='submit' className='btn'>
-          Submit
-        </button>
-      </form>
-      <div>
+      <strong className='top'>Section -1</strong>
+      <div className='top-image'>
         <img src={state.uploadImage[0]?.secure_url} alt='' />
       </div>
+      <div className='box'>
+        <strong>Step-1. </strong>
+        <p>Upload your Image</p>
+      </div>
+      <hr />
+      <div className='upload-image'>
+        <UploadImage
+          path={`/sectionOne/${state._id}`}
+          cbFunction={cbFunction}
+          state={state}
+          setState={setState}
+        />
+      </div>
+      <hr />
+      <div className='box'>
+        <strong>Step-2. </strong>
+        <p>Fill details below and submit.</p>
+      </div>
+      <form className='form' onSubmit={handleSubmit}>
+        <div className='box-1'>
+          {/* heading  */}
+          <div>
+            <FormInput
+              label={'Heading'}
+              name={'heading'}
+              value={state.heading}
+              onChange={handleChange}
+            />
+          </div>
+          {/* Button Title  */}
+          <div>
+            <FormInput
+              label={'Button Title'}
+              name={'buttonTitle'}
+              value={state.buttonTitle}
+              onChange={handleChange}
+            />
+          </div>
+          {/* desktop Image */}
+          <div>
+            <FormInput
+              label={'Desktop Image Link'}
+              name={'desktopImage'}
+              value={state.uploadImage[0]?.secure_url}
+              onChange={handleChange}
+              disabled
+            />
+          </div>
+
+          <button type='submit' className='btn'>
+            Submit
+          </button>
+        </div>
+        {/* =============Box divider============= */}
+        <div className='box-2'>
+          {/* paragraph */}
+          <div className='paragraph'>
+            <label className='form-label' htmlFor='paragraph'>
+              Paragraph
+            </label>
+            <textarea
+              className='form-input'
+              name='paragraph'
+              id='paragraph'
+              cols='30'
+              rows='10'
+              value={state.paragraph}
+              onChange={handleChange}
+            ></textarea>
+          </div>
+        </div>
+      </form>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  .top {
+    position: absolute;
+    right: 5%;
+  }
+  .top-image {
+    max-width: 135px;
+    max-height: 135px;
+    position: absolute;
+    right: 10%;
+    top: 28%;
+    img {
+      width: 100%;
+    }
+  }
+  .box {
+    display: flex;
+    p {
+      margin: 0;
+      margin-left: 1rem;
+    }
+  }
+  .upload-image {
+    height: 120px;
+  }
+  .form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 80vw;
+  }
+`
 export default ContentSectionOne

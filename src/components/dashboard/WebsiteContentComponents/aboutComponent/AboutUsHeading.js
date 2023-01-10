@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import styled from 'styled-components'
 import { customFetch } from '../../../../utils/axios'
 import { getUserFromLocalStorage } from '../../../../utils/localStorage'
 import FormInput from '../../../FormInput'
@@ -67,7 +68,12 @@ const AboutUsHeading = () => {
     )
   }
   return (
-    <div>
+    <Wrapper>
+      <div className='box'>
+        <strong>Step-1. </strong>
+        <p>About Us Page Heading and Title.</p>
+      </div>
+      <hr />
       <form onSubmit={handleSubmit} className='form'>
         {/* Title */}
         <div>
@@ -91,8 +97,16 @@ const AboutUsHeading = () => {
           </div>
         </div>
       </form>
-    </div>
+    </Wrapper>
   )
 }
-
+const Wrapper = styled.div`
+  .box {
+    display: flex;
+    p {
+      margin: 0;
+      margin-left: 1rem;
+    }
+  }
+`
 export default AboutUsHeading

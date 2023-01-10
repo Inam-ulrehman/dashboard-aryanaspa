@@ -95,5 +95,9 @@ const ContentSocialLinks = () => {
     </Wrapper>
   )
 }
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  .form {
+    max-width: 80vw;
+  }
+`
 export default ContentSocialLinks

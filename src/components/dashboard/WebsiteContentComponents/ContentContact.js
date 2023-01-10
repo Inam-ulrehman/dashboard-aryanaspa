@@ -118,6 +118,9 @@ const ContentContact = () => {
   )
 }
 const Wrapper = styled.div`
+  .form {
+    max-width: 80vw;
+  }
   .number {
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {

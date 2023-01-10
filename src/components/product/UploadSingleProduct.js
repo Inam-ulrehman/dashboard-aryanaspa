@@ -31,6 +31,10 @@ const UploadSingleProduct = () => {
 
   return (
     <Wrapper>
+      <div className='box'>
+        <strong>Step-2. </strong>
+        <p>Upload your product Details and submit.</p>
+      </div>
       {/* ==== VALUE INPUT */}
 
       {/* ====FORM INPUT */}
@@ -127,6 +131,16 @@ const UploadSingleProduct = () => {
   )
 }
 const Wrapper = styled.div`
+  .box {
+    display: flex;
+    strong {
+      margin-left: 1rem;
+    }
+    p {
+      margin: 0;
+      margin-left: 1rem;
+    }
+  }
   form {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

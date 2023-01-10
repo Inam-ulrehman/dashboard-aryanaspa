@@ -34,7 +34,6 @@ const Products = () => {
       </div>
     )
   }
-
   return (
     <Wrapper>
       <Helmet>
@@ -65,8 +64,8 @@ const Products = () => {
                 </td>
                 <td>{item.title}</td>
                 <td>{item.category}</td>
-                <td>{item.inStock ? 'In-Stock' : 'out-of-Stock'}</td>
-                <td>{item.feature ? 'Feature' : ''}</td>
+                <td>{item.inStock ? 'Available' : 'out-of-Stock'}</td>
+                <td>{item.feature ? 'Feature' : null}</td>
                 <td className='buttons'>
                   <Link className='btn' to={item._id}>
                     Edit

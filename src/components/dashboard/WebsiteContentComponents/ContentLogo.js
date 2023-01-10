@@ -47,6 +47,9 @@ const ContentLogo = () => {
         state={state}
         setState={setState}
       />
+      <hr />
+      <h3 className='title'>Website Logo </h3>
+      <div className='title-underline'></div>
       <div className='imageHolder'>
         <img src={state.secure_url} alt='Logo' />
       </div>
@@ -57,7 +60,9 @@ const Wrapper = styled.div`
   .imageHolder {
     width: 100px;
     height: 100px;
+    margin: 0 auto;
     img {
+      margin-top: 1rem;
       width: 100%;
     }
   }

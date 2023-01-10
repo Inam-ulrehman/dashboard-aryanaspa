@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import styled from 'styled-components'
 import {
   getAboutUsValues,
   uploadAboutUsThunk,
@@ -29,7 +30,12 @@ const UploadAboutUs = () => {
     dispatch(getAboutUsValues({ name, value }))
   }
   return (
-    <div>
+    <Wrapper>
+      <hr />
+      <div className='box'>
+        <strong>Step-3. </strong>
+        <p>Fill information for about us card.</p>
+      </div>
       <form className='form' onSubmit={handleSubmit}>
         {/* Name */}
         <div>
@@ -45,23 +51,32 @@ const UploadAboutUs = () => {
         </div>
         {/* paragraph */}
         <div>
-          <label htmlFor='paragraph'>
-            <textarea
-              name='paragraph'
-              id='paragraph'
-              cols='40'
-              rows='10'
-              value={paragraph}
-              onChange={handleChange}
-            ></textarea>
+          <label className='form-label' htmlFor='paragraph'>
+            Paragraph
           </label>
+          <textarea
+            name='paragraph'
+            id='paragraph'
+            cols='40'
+            rows='10'
+            value={paragraph}
+            onChange={handleChange}
+          ></textarea>
         </div>
         <button onClick={handleSubmit} className='btn'>
           Submit
         </button>
       </form>
-    </div>
+    </Wrapper>
   )
 }
-
+const Wrapper = styled.div`
+  .box {
+    display: flex;
+    p {
+      margin: 0;
+      margin-left: 1rem;
+    }
+  }
+`
 export default UploadAboutUs
