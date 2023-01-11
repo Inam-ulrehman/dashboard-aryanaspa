@@ -7,18 +7,18 @@ import {
   uploadProductThunk,
 } from '../../features/products/productSlice'
 import FormInput from '../FormInput'
-import AmountUploadSingleProduct from './AmountUploadSingleProduct'
+// import AmountUploadSingleProduct from './AmountUploadSingleProduct'
 
 const UploadSingleProduct = () => {
   const dispatch = useDispatch()
   const { product } = useSelector((state) => state)
   const handleSubmit = (e) => {
     e.preventDefault()
-    const { title, amount, category, description, uploadImage } = product
+    const { title, category, description, uploadImage } = product
     if (uploadImage.length <= 0) {
       return toast.warning('Please upload Image.')
     }
-    if (!title || !amount || !category || !description) {
+    if (!title || !category || !description) {
       return toast.warning('Please fill all REQUIRED fields.')
     }
     dispatch(uploadProductThunk(product))
@@ -60,7 +60,29 @@ const UploadSingleProduct = () => {
             />
           </div>
           {/* amount  */}
-          <AmountUploadSingleProduct />
+          {/* <AmountUploadSingleProduct /> */}
+          <div className='amount-container'>
+            <div className='amountOne'>
+              <div className='box-1 text'>
+                <label htmlFor='amountOneText'>Text</label>
+                <input
+                  type='text'
+                  name='amountOneText'
+                  value={product.amountOneText}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='box-2 amount'>
+                <label htmlFor='amountOne'>Amount</label>
+                <input
+                  type='number'
+                  name='amountOne'
+                  value={product.amountOne}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
         </div>
         {/* ===============div divider========= */}
         <div>

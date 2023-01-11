@@ -12,6 +12,12 @@ import paginate from '../../utils/paginate'
 const initialState = {
   title: '',
   amount: '',
+  amountOne: '',
+  amountTwo: '',
+  amountThree: '',
+  amountOneText: '',
+  amountTwoText: '',
+  amountThreeText: '',
   category: '',
   subCategory: '',
   inStock: true,
