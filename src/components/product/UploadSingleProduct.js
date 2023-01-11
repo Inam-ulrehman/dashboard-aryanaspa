@@ -7,6 +7,7 @@ import {
   uploadProductThunk,
 } from '../../features/products/productSlice'
 import FormInput from '../FormInput'
+import AmountHolder from './AmountHolder'
 // import AmountUploadSingleProduct from './AmountUploadSingleProduct'
 
 const UploadSingleProduct = () => {
@@ -59,30 +60,9 @@ const UploadSingleProduct = () => {
               onChange={handleChange}
             />
           </div>
-          {/* amount  */}
+          {/*=============================== amount============================  */}
           {/* <AmountUploadSingleProduct /> */}
-          <div className='amount-container'>
-            <div className='amountOne'>
-              <div className='box-1 text'>
-                <label htmlFor='amountOneText'>Text</label>
-                <input
-                  type='text'
-                  name='amountOneText'
-                  value={product.amountOneText}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className='box-2 amount'>
-                <label htmlFor='amountOne'>Amount</label>
-                <input
-                  type='number'
-                  name='amountOne'
-                  value={product.amountOne}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
+          <AmountHolder handleChange={handleChange} />
         </div>
         {/* ===============div divider========= */}
         <div>
@@ -173,6 +153,13 @@ const Wrapper = styled.div`
     padding-top: 1rem;
     label {
       margin-left: 1rem;
+    }
+  }
+
+  /* =========amount css======= */
+  .amount-container {
+    .container {
+      display: flex;
     }
   }
 `
