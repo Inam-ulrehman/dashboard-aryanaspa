@@ -157,10 +157,5 @@ const Wrapper = styled.div`
   }
 
   /* =========amount css======= */
-  .amount-container {
-    .container {
-      display: flex;
-    }
-  }
 `
 export default UploadSingleProduct

@@ -7,6 +7,12 @@ let initialState = {
   _id: '',
   title: '',
   amount: '',
+  amountOne: '',
+  amountTwo: '',
+  amountThree: '',
+  amountOneText: '',
+  amountTwoText: '',
+  amountThreeText: '',
   category: '',
   subCategory: '',
   inStock: true,
@@ -83,6 +89,12 @@ const editProductSlice = createSlice({
       state._id = payload._id
       state.title = payload.title
       state.amount = payload.amount
+      state.amountOne = payload.amountOne
+      state.amountTwo = payload.amountTwo
+      state.amountThree = payload.amountThree
+      state.amountOneText = payload.amountOneText
+      state.amountTwoText = payload.amountTwoText
+      state.amountThreeText = payload.amountThreeText
       state.category = payload.category
       state.subCategory = payload.subCategory
       state.inStock = payload.inStock

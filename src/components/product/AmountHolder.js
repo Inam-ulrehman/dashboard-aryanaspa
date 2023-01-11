@@ -1,9 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components'
 
 const AmountHolder = ({ handleChange, product }) => {
   return (
-    <div className='amount-container'>
+    <Wrapper className='amount-container'>
       {/* amountOne */}
       <div className='amountOne container'>
         <div className='box-1 text'>
@@ -86,8 +87,12 @@ const AmountHolder = ({ handleChange, product }) => {
           />
         </div>
       </div>
-    </div>
+    </Wrapper>
   )
 }
-
+const Wrapper = styled.div`
+  .container {
+    display: flex;
+  }
+`
 export default AmountHolder

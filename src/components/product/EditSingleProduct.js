@@ -8,6 +8,7 @@ import {
   getEditProductValue,
 } from '../../features/products/editProductSlice'
 import FormInput from '../FormInput'
+import AmountHolder from './AmountHolder'
 
 const EditSingleProduct = () => {
   const dispatch = useDispatch()
@@ -16,8 +17,8 @@ const EditSingleProduct = () => {
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault()
-    const { title, amount, category, description } = product
-    if (!title || !amount || !category || !description) {
+    const { title, category, description } = product
+    if (!title || !category || !description) {
       return toast.warning('Please fill all REQUIRED fields.')
     }
 
@@ -63,15 +64,17 @@ const EditSingleProduct = () => {
             />
           </div>
           {/* amount  */}
-          <div>
-            <FormInput
+          {/* <div> */}
+          {/* <FormInput
               placeholder={'required'}
               type={'number'}
               name={'amount'}
               value={product.amount}
               onChange={handleChange}
             />
-          </div>
+          </div> */}
+
+          <AmountHolder handleChange={handleChange} product={product} />
         </div>
         {/* ===============div divider========= */}
         <div>
