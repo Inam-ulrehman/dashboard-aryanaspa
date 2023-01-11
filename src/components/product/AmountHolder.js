@@ -1,8 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-const AmountHolder = ({ handleChange }) => {
-  const { product } = useSelector((state) => state)
+const AmountHolder = ({ handleChange, product }) => {
   return (
     <div className='amount-container'>
       {/* amountOne */}

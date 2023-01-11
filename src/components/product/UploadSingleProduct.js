@@ -62,7 +62,7 @@ const UploadSingleProduct = () => {
           </div>
           {/*=============================== amount============================  */}
           {/* <AmountUploadSingleProduct /> */}
-          <AmountHolder handleChange={handleChange} />
+          <AmountHolder handleChange={handleChange} product={product} />
         </div>
         {/* ===============div divider========= */}
         <div>
