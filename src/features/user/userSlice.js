@@ -11,7 +11,7 @@ const user = getUserFromLocalStorage()
 const initialState = {
   token: user?.token || '',
   userName: user?.user?.name || '',
-  isMember: user ? true : false,
+  isMember: user?.isAdmin ? true : false,
   isLoading: false,
   forgetPassword: false,
 }
@@ -60,6 +60,18 @@ export const loginUserThunk = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await customFetch.post('/auth/login', user)
+      const token = response.data.token
+      const isAdmin = await customFetch.post(
+        '/auth/verifyAdmin',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      response.data.isAdmin = isAdmin.data.msg
 
       return response.data
     } catch (error) {
@@ -158,7 +170,7 @@ const userSlice = createSlice({
       setUserInLocalStorage(payload)
       state.token = payload.token
       state.userName = payload.user.name
-      state.isMember = true
+      state.isMember = payload.isAdmin
       state.isLoading = false
       toast.success(`Welcome ${payload.user.name.toUpperCase()}.`)
     },
@@ -171,10 +183,11 @@ const userSlice = createSlice({
       state.isLoading = true
     },
     [loginUserThunk.fulfilled]: (state, { payload }) => {
+      console.log(payload)
       setUserInLocalStorage(payload)
       state.token = payload.token
       state.userName = payload.user.name
-      state.isMember = true
+      state.isMember = payload.isAdmin
       state.isLoading = false
       toast.success(`Welcome back ${payload.user.name.toUpperCase()}.`)
     },
