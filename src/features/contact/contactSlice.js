@@ -2,12 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
 import { customFetch } from '../../utils/axios'
 import { getUserFromLocalStorage } from '../../utils/localStorage'
-import paginate from '../../utils/paginate'
 
 const initialState = {
   contactList: [],
   singleContact: [],
   count: '',
+  page: 1,
+  limit: 10,
+  nbHits: '',
   deleteId: '',
   getContacts: false,
   isLoading: false,
@@ -37,6 +39,7 @@ export const getContactThunk = createAsyncThunk(
           Authorization: `Bearer ${user?.token}`,
         },
       })
+
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
@@ -92,6 +95,26 @@ const contactSlice = createSlice({
     getContactDeleteId: (state, { payload }) => {
       state.deleteId = payload
     },
+    getStateValues: (state, { payload }) => {
+      const { name, value } = payload
+      state[name] = value
+    },
+    queryProducts: (state, { payload }) => {
+      state.contactList = payload.result
+      state.nbHits = payload.total
+      state.count = payload.total
+    },
+    nextOrder: (state, { payload }) => {
+      state.page = state.page + 1
+    },
+    prevOrder: (state, { payload }) => {
+      state.page = state.page - 1
+    },
+    indexOrder: (state, { payload }) => {
+      const index = Number(payload)
+
+      state.page = index
+    },
   },
   extraReducers: {
     [contactThunk.pending]: (state, { payload }) => {
@@ -111,9 +134,10 @@ const contactSlice = createSlice({
       state.isLoading = true
     },
     [getContactThunk.fulfilled]: (state, { payload }) => {
-      const { contacts, count } = payload
-      state.contactList = paginate(contacts)
-      state.count = count
+      const { result, total } = payload
+      state.contactList = result
+      state.count = total
+      state.nbHits = total
       state.isLoading = false
     },
     [getContactThunk.rejected]: (state, { payload }) => {
@@ -147,5 +171,13 @@ const contactSlice = createSlice({
     },
   },
 })
-export const { createFunction, getContactDeleteId } = contactSlice.actions
+export const {
+  getStateValues,
+  queryProducts,
+  nextOrder,
+  prevOrder,
+  indexOrder,
+  createFunction,
+  getContactDeleteId,
+} = contactSlice.actions
 export default contactSlice.reducer

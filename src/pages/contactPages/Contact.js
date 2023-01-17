@@ -1,10 +1,12 @@
 import moment from 'moment/moment'
-import React, { useState } from 'react'
+import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Pagination } from '../../components'
+import Pagination from '../../components/contact/Pagination'
+import Search from '../../components/contact/Search'
+
 import {
   getContactDeleteId,
   getContactThunk,
@@ -13,11 +15,10 @@ import { showContactWarning } from '../../features/functions/functionSlice'
 
 const Contact = () => {
   const dispatch = useDispatch()
-  const { contactList, count, isLoading, getContacts } = useSelector(
+  const { contactList, count, page, isLoading, getContacts } = useSelector(
     (state) => state.contact
   )
 
-  const [index, setIndex] = useState(0)
   //=== handle Delete button
 
   const handleDelete = (_id) => {
@@ -41,21 +42,26 @@ const Contact = () => {
     <Wrapper>
       <h4>
         <strong>Total forms: {count}</strong>
-        <strong>Page No: {index + 1}</strong>
+        <strong>Page No: {page}</strong>
       </h4>
+      <Search />
       <table>
         <tbody>
           <tr>
             <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
             <th>Subject</th>
             <th>Created At</th>
             <th>Actions</th>
           </tr>
 
-          {contactList[index]?.map((item, itemIndex) => {
+          {contactList?.map((item, itemIndex) => {
             return (
               <tr className='tr' key={itemIndex}>
                 <td>{item.name}</td>
+                <td>{item.phone}</td>
+                <td>{item.email}</td>
                 <td>{item.subject}</td>
                 <td>{moment(item.createdAt).format('MMM Do YY')}</td>
                 <td className='buttons'>
@@ -75,11 +81,7 @@ const Contact = () => {
           })}
         </tbody>
       </table>
-      <Pagination
-        index={index}
-        setIndex={setIndex}
-        productsList={contactList}
-      />
+      <Pagination />
     </Wrapper>
   )
 }
