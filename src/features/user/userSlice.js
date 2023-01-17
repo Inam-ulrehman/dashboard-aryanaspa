@@ -177,7 +177,6 @@ const userSlice = createSlice({
       state[name] = value
     },
     queryProducts: (state, { payload }) => {
-      console.log(payload)
       state.userList = payload.result
       state.nbHits = payload.total
     },

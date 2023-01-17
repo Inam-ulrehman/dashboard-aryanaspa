@@ -47,9 +47,7 @@ const Search = () => {
       )
 
       dispatch(queryProducts(response.data))
-    } catch (error) {
-      console.log(error.response)
-    }
+    } catch (error) {}
   }
 
   const handleClear = () => {
