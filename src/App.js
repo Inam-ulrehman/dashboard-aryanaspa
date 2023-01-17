@@ -24,6 +24,7 @@ import {
 } from './pages/dashboardPages'
 import { Orders, SingleOrder } from './pages/orderPages'
 import { Products, UploadProduct, SingleProduct } from './pages/productPages'
+import { RegisterUser, SingleUser, Users } from './pages/userPages'
 
 const App = () => {
   return (
@@ -54,7 +55,13 @@ const App = () => {
                 element={<SingleProduct />}
               />
               <Route path='/dashboard/orders' element={<Orders />} />
-              <Route path='/dashboard/orders/:id' element={<SingleOrder />} />
+              <Route path='/dashboard/orders/:_id' element={<SingleOrder />} />
+              <Route path='/dashboard/users' element={<Users />} />
+              <Route path='/dashboard/users/:_id' element={<SingleUser />} />
+              <Route
+                path='/dashboard/users/register'
+                element={<RegisterUser />}
+              />
             </Route>
             {/* ===============Dashboard inside route===============Finish */}
             <Route path='/dashboard/profile' element={<Profile />} />

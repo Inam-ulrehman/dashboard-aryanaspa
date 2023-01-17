@@ -14,6 +14,10 @@ const initialState = {
   isMember: user?.isAdmin ? true : false,
   isLoading: false,
   forgetPassword: false,
+  userList: [],
+  nbHits: '',
+  page: 1,
+  limit: 10,
 }
 
 export const userThunk = createAsyncThunk(
@@ -133,6 +137,26 @@ export const changePasswordThunk = createAsyncThunk(
   }
 )
 
+// ========= Get users ========
+export const getUsersThunk = createAsyncThunk(
+  'user/getUsersThunk',
+  async (query, thunkAPI) => {
+    const user = getUserFromLocalStorage()
+    try {
+      const response = await customFetch.get('auth/users', {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+
+      return response.data
+    } catch (error) {
+      console.log(error.response)
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -147,6 +171,26 @@ const userSlice = createSlice({
     },
     forgetPasswordToggle: (state, { payload }) => {
       state.forgetPassword = !state.forgetPassword
+    },
+    getStateValues: (state, { payload }) => {
+      const { name, value } = payload
+      state[name] = value
+    },
+    queryProducts: (state, { payload }) => {
+      console.log(payload)
+      state.userList = payload.result
+      state.nbHits = payload.total
+    },
+    nextOrder: (state, { payload }) => {
+      state.page = state.page + 1
+    },
+    prevOrder: (state, { payload }) => {
+      state.page = state.page - 1
+    },
+    indexOrder: (state, { payload }) => {
+      const index = Number(payload)
+
+      state.page = index
     },
   },
   extraReducers: {
@@ -244,8 +288,30 @@ const userSlice = createSlice({
       state.isLoading = false
       toast.error(`${payload?.msg ? payload.msg : payload}`)
     },
+    // get all users
+    [getUsersThunk.pending]: (state, { payload }) => {
+      state.isLoading = true
+    },
+    [getUsersThunk.fulfilled]: (state, { payload }) => {
+      state.isLoading = false
+      const { result, total } = payload
+      state.userList = result
+      state.nbHits = total
+    },
+    [getUsersThunk.rejected]: (state, { payload }) => {
+      state.isLoading = false
+      toast.error(`${payload?.msg ? payload.msg : payload}`)
+    },
   },
 })
-export const { createFunction, logOut, forgetPasswordToggle } =
-  userSlice.actions
+export const {
+  getStateValues,
+  queryProducts,
+  nextOrder,
+  prevOrder,
+  indexOrder,
+  createFunction,
+  logOut,
+  forgetPasswordToggle,
+} = userSlice.actions
 export default userSlice.reducer
