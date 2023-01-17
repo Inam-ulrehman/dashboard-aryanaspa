@@ -1,21 +1,23 @@
-import { React, useState, useEffect } from 'react'
+import { React, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Pagination } from '../../components'
+import Search from '../../components/product/Search'
+import ServerSidePagination from '../../components/product/ServerSidePagination'
 
 import { showProductWarning } from '../../features/functions/functionSlice'
 import {
   getProductDeleteId,
   getProductsThunk,
 } from '../../features/products/productSlice'
+import { formatPrice } from '../../utils/helper'
 
 const Products = () => {
   const dispatch = useDispatch()
   const { product } = useSelector((state) => state)
-  const [index, setIndex] = useState(0)
-  const { isLoading, productsList, nbHits, getProducts } = product
+
+  const { isLoading, productsList, nbHits, getProducts, page } = product
 
   const handleDelete = (_id) => {
     dispatch(showProductWarning())
@@ -41,22 +43,30 @@ const Products = () => {
         <meta name='description' content='Welcome to our Product Page.' />
         <link rel='canonical' href='/product' />
       </Helmet>
-      <h4>
-        <strong>Total Products: {nbHits}</strong>{' '}
-        <strong>Page No: {index + 1}</strong>
-      </h4>
+      <div className='span'>
+        <span>
+          Total Products: <strong>{nbHits}</strong>
+        </span>
+        <span>
+          Page No: <strong>{page}</strong>
+        </span>
+      </div>
+      {/* Search */}
+      <Search />
       <table>
         <tbody>
           <tr>
             <th>PRODUCT IMAGE</th>
             <th>TITLE</th>
             <th>CATEGORY</th>
+            <th>SUBCATEGORY</th>
             <th>AVAILABLE</th>
-            <th>Feature</th>
+            <th>FEATURE</th>
+            <th>PRICE</th>
             <th>ACTIONS</th>
           </tr>
 
-          {productsList[index]?.map((item) => {
+          {productsList?.map((item) => {
             return (
               <tr key={item._id}>
                 <td className='image-holder'>
@@ -64,8 +74,10 @@ const Products = () => {
                 </td>
                 <td>{item.title}</td>
                 <td>{item.category}</td>
+                <td>{item.subCategory}</td>
                 <td>{item.inStock ? 'Available' : 'out-of-Stock'}</td>
                 <td>{item.feature ? 'Feature' : null}</td>
+                <td>{formatPrice(item.amount)}</td>
                 <td className='buttons'>
                   <Link className='btn' to={item._id}>
                     Edit
@@ -84,15 +96,16 @@ const Products = () => {
         </tbody>
       </table>
       {/* Pagination buttons */}
-      <Pagination
-        index={index}
-        setIndex={setIndex}
-        productsList={productsList}
-      />
+      <ServerSidePagination />
     </Wrapper>
   )
 }
 const Wrapper = styled.div`
+  .span {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 2rem;
+  }
   text-align: center;
   .image-holder {
     max-width: 150px;
@@ -100,10 +113,7 @@ const Wrapper = styled.div`
   img {
     width: 100px;
   }
-  h4 {
-    display: flex;
-    justify-content: space-between;
-  }
+
   td {
     text-transform: capitalize;
   }

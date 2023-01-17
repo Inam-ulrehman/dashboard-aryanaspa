@@ -7,7 +7,6 @@ import {
   removeImageFromLocalStorage,
   setImageInLocalStorage,
 } from '../../utils/localStorage'
-import paginate from '../../utils/paginate'
 
 const initialState = {
   title: '',
@@ -20,6 +19,8 @@ const initialState = {
   amountThreeText: '',
   category: '',
   subCategory: '',
+  page: 1,
+  limit: 10,
   inStock: true,
   feature: false,
   totalStock: 10,
@@ -111,7 +112,7 @@ export const getProductsThunk = createAsyncThunk(
   'product/getProductsThunk',
   async (_, thunkAPI) => {
     try {
-      const response = await customFetch.get('/products/static')
+      const response = await customFetch.get('/products')
 
       return response.data
     } catch (error) {
@@ -157,6 +158,21 @@ const productSlice = createSlice({
     getStateValues: (state, { payload }) => {
       const { name, value } = payload
       state[name] = value
+    },
+    queryProducts: (state, { payload }) => {
+      state.productsList = payload.result
+      state.nbHits = payload.totalOrders
+    },
+    nextOrder: (state, { payload }) => {
+      state.page = state.page + 1
+    },
+    prevOrder: (state, { payload }) => {
+      state.page = state.page - 1
+    },
+    indexOrder: (state, { payload }) => {
+      const index = Number(payload)
+
+      state.page = index
     },
   },
   extraReducers: {
@@ -229,9 +245,9 @@ const productSlice = createSlice({
       state.isLoading = true
     },
     [getProductsThunk.fulfilled]: (state, { payload }) => {
-      const { nbHits, products } = payload
-      state.productsList = paginate(products)
-      state.nbHits = nbHits
+      const { totalOrders, result } = payload
+      state.productsList = result
+      state.nbHits = totalOrders
       state.isLoading = false
     },
     [getProductsThunk.rejected]: (state, { payload }) => {
@@ -254,9 +270,13 @@ const productSlice = createSlice({
   },
 })
 export const {
+  nextOrder,
+  prevOrder,
+  indexOrder,
   createFunction,
   getStateValues,
   getProductDeleteId,
   getUploadProductAmount,
+  queryProducts,
 } = productSlice.actions
 export default productSlice.reducer
