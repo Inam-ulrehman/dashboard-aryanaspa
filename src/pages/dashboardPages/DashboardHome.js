@@ -5,15 +5,17 @@ import { DashboardTotalCard } from '../../components/cards'
 import { getProductsThunk } from '../../features/products/productSlice'
 import { getOrdersThunk } from '../../features/order/orderSlice'
 import { getContactThunk } from '../../features/contact/contactSlice'
+import { getUsersThunk } from '../../features/user/userSlice'
 
 const DashboardHome = () => {
-  const { product, order, contact } = useSelector((state) => state)
+  const { product, order, contact, user } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getProductsThunk())
     dispatch(getOrdersThunk(order))
     dispatch(getContactThunk())
+    dispatch(getUsersThunk())
     // eslint-disable-next-line
   }, [])
   return (
@@ -35,6 +37,12 @@ const DashboardHome = () => {
         title={`Contacts`}
         total={contact.count}
         navigateLink={'/dashboard/Contact'}
+      />
+      {/* User Card */}
+      <DashboardTotalCard
+        title={`Users`}
+        total={user.nbHits}
+        navigateLink={'/dashboard/users'}
       />
     </Wrapper>
   )
