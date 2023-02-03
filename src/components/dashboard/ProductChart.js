@@ -63,8 +63,8 @@ const ProductChart = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey='TotalStock' fill='#8884d8' />
-        <Bar dataKey='TotalItems' fill='#82ca9d' />
+        <Bar dataKey='TotalStock' fill='var(--primary-5)' />
+        <Bar dataKey='TotalItems' fill='var(--primary-8)' />
       </BarChart>
     </div>
   )
